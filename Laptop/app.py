@@ -10,22 +10,16 @@ import base64
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
-
-# Helper function to encode background image
 def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         encoded = base64.b64encode(img_file.read()).decode()
     return f"data:image/jpeg;base64,{encoded}"
 
 st.set_page_config(page_title="Laptop Price Prediction App", layout="wide")
-
-# Sidebar Navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "EDA", "Train Model", "Test Model", "Predict Price"])
-
-# --------- Page 1: Home ----------
 if page == "Home":
-    img_url = get_base64_image("C:/Users/PMLS/Desktop/Laptop/images/im.webp")
+    img_url = get_base64_image("C:\Users\PMLS\Desktop\ML-Project\Laptop\images\im.webp")
     st.markdown(f"""
         <style>
         .stApp {{
@@ -44,8 +38,6 @@ if page == "Home":
         </style>
     """, unsafe_allow_html=True)
     st.markdown('<div class="title">Laptop Price Prediction App</div>', unsafe_allow_html=True)
-
-# --------- Page 2: EDA ----------
 elif page == "EDA":
     st.title("Exploratory Data Analysis")
     try:
@@ -93,7 +85,6 @@ elif page == "EDA":
         axes[1].set_title(f"Price vs {feature}")
         st.pyplot(fig)
 
-# --------- Page 3: Train Model ----------
 elif page == "Train Model":
     st.title("Model Training")
 
@@ -123,7 +114,6 @@ elif page == "Train Model":
 
     joblib.dump((model, X_test, y_test), 'model.pkl')
 
-# --------- Page 4: Test Model ----------
 elif page == "Test Model":
     st.title("Model Testing")
     try:
@@ -147,7 +137,6 @@ elif page == "Test Model":
 
     st.write(f"R² Score on Test Data: **{model.score(X_test, y_test):.4f}**")
 
-# --------- Page 5: Predict Price ----------
 elif page == "Predict Price":
     model, _, _ = joblib.load('model.pkl')
     feature_columns = joblib.load('model_features.pkl')
@@ -199,5 +188,5 @@ elif page == "Predict Price":
 
     if st.button("Predict Price"):
         prediction = model.predict(input_encoded)[0]
-        prediction = max(prediction, 0)  # Avoid negative prices
+        prediction = max(prediction, 0) 
         st.success(f"💰 Estimated Laptop Price: ₹{int(prediction):,}")
