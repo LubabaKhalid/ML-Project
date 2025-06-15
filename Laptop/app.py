@@ -19,7 +19,7 @@ st.set_page_config(page_title="Laptop Price Prediction App", layout="wide")
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "EDA", "Train Model", "Test Model", "Predict Price"])
 if page == "Home":
-    img_url = get_base64_image("C:\Users\PMLS\Desktop\ML-Project\Laptop\images\im.webp")
+    img_url = get_base64_image(r"C:\Users\PMLS\Desktop\ML-Project\Laptop\images\im.webp")
     st.markdown(f"""
         <style>
         .stApp {{
